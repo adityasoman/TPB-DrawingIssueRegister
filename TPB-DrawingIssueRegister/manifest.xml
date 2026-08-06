@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
-  <Id>37d7eedf-e864-44cd-a342-99f4d459683c</Id>
+  <Id>5baea9ba-f4d6-4f64-832b-43e2c68c4950</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
+  <ProviderName>TP Bennett</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="TPB-DrawingIssueRegister"/>
-  <Description DefaultValue="A template to get started."/>
+  <DisplayName DefaultValue="TPB Drawing Issue Register"/>
+  <Description DefaultValue="Upload transmittals and populate the TP Bennett drawing issue register directly in Excel."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-32.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
-  <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
-  </AppDomains>
+  <SupportUrl DefaultValue="https://github.com/adityasoman/TPB-DrawingIssueRegister/issues"/>
   <Hosts>
     <Host Name="Workbook"/>
   </Hosts>

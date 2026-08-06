@@ -20,36 +20,74 @@
     <link href="taskpane.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body class="ms-font-m ms-welcome ms-Fabric">
-    <header class="ms-welcome__header ms-bgColor-neutralLighter">
-        <img width="90" height="90" src="../../assets/logo-filled.png" alt="Contoso" title="Contoso" />
-        <h1 class="ms-font-su">Welcome</h1>
-    </header>
-    <section id="sideload-msg" class="ms-welcome__main">
-        <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
-    </section>
-    <main id="app-body" class="ms-welcome__main" style="display: none;">
-        <h2 class="ms-font-xl"> Discover what Office Add-ins can do for you today! </h2>
-        <ul class="ms-List ms-welcome__features">
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Ribbon ms-font-xl"></i>
-                <span class="ms-font-m">Achieve more with Office integration</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Unlock ms-font-xl"></i>
-                <span class="ms-font-m">Unlock features and functionality</span>
-            </li>
-            <li class="ms-ListItem">
-                <i class="ms-Icon ms-Icon--Design ms-font-xl"></i>
-                <span class="ms-font-m">Create and visualize like a pro</span>
-            </li>
-        </ul>
-        <p class="ms-font-l">Modify the source files, then click <b>Run</b>.</p>
-        <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl">
-            <span class="ms-Button-label">Run</span>
+<body class="ms-font-m ms-welcome ms-Fabric bg-canvas text-ink min-h-screen flex flex-col">
+    <header class="bg-surface border-b border-line flex flex-col gap-1 px-4 py-3">
+        <div class="flex flex-row items-center gap-3">
+            <img id="brand-logo" alt="TP Bennett" class="hidden max-h-6 max-w-[150px] w-auto object-contain" />
+            <span id="brand-logo-fallback" class="text-ink font-semibold tracking-wide text-sm">TP BENNETT</span>
         </div>
-        <p><label id="item-subject"></label></p>
-    </main>
+        <h2 class="text-ink text-lg font-medium m-0">Drawing Issue Register</h2>
+    </header>
+    <div class="flex-1 flex flex-col">
+        <section id="sideload-msg" class="ms-welcome__main">
+            <h2 class="ms-font-xl text-ink">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing" class="text-accent hover:text-accent-strong focus:outline-none focus:ring-2 focus:ring-accent rounded">sideload</a> your add-in to see app body.</h2>
+        </section>
+        <main id="app-body" class="flex-1 flex flex-col gap-4 px-4 py-4" style="display: none;">
+            <section aria-labelledby="upload-heading" class="flex flex-col gap-2">
+                <h2 id="upload-heading" class="text-ink text-sm font-semibold m-0">1. Upload Transmittal(s)</h2>
+
+                <div
+                    id="upload-dropzone"
+                    role="button"
+                    tabindex="0"
+                    aria-describedby="upload-caption"
+                    class="border-2 border-dashed border-line rounded bg-surface-2 px-4 py-6 flex flex-col items-center gap-1 text-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                    <span class="text-ink text-sm">Drag &amp; drop transmittal files here</span>
+                    <span class="text-ink-muted text-xs">or click to browse</span>
+                    <input id="upload-input" type="file" accept=".xlsx,.xls,.csv" multiple class="hidden" />
+                </div>
+
+                <p id="upload-error" class="text-xs text-red-400 hidden" role="alert"></p>
+
+                <ul id="upload-file-list" class="flex flex-col gap-1"></ul>
+
+                <p id="upload-caption" class="text-ink-muted text-xs">Accepts one or more .xlsx, .xls, or .csv transmittal files.</p>
+            </section>
+
+            <section aria-labelledby="issue-mode-heading" class="flex flex-col gap-2">
+                <h2 id="issue-mode-heading" class="text-ink text-sm font-semibold m-0">2. Issue Mode</h2>
+
+                <div role="radiogroup" aria-labelledby="issue-mode-heading" class="flex flex-col gap-2">
+                    <label class="flex items-center gap-2 text-sm text-ink cursor-pointer">
+                        <input
+                            type="radio"
+                            name="issue-mode"
+                            value="single"
+                            checked
+                            class="accent-accent focus:outline-none focus:ring-2 focus:ring-accent"
+                        />
+                        Single issue
+                    </label>
+                    <label class="flex items-center gap-2 text-sm text-ink cursor-pointer">
+                        <input
+                            type="radio"
+                            name="issue-mode"
+                            value="multiple"
+                            class="accent-accent focus:outline-none focus:ring-2 focus:ring-accent"
+                        />
+                        Multiple issues in this transmittal
+                    </label>
+                </div>
+
+                <p id="issue-mode-caption" class="text-ink-muted text-xs">Choose "Single issue" if this transmittal covers one drawing issue, or "Multiple issues" if it bundles several into one file.</p>
+            </section>
+        </main>
+    </div>
+    <footer class="bg-surface border-t border-line flex flex-row items-center justify-between gap-2 px-4 py-2 text-xs text-ink-muted">
+        <span>&#169; 2026 TP Bennett. All rights reserved.</span>
+        <span>Version: Released for Testing</span>
+    </footer>
 </body>
 
 </html>

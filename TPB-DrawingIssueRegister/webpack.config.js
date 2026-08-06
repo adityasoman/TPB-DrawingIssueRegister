@@ -42,6 +42,11 @@ module.exports = async (env, options) => {
           use: "html-loader",
         },
         {
+          test: /\.css$/,
+          exclude: /node_modules/,
+          use: "postcss-loader",
+        },
+        {
           test: /\.(png|jpg|jpeg|gif|ico)$/,
           type: "asset/resource",
           generator: {
@@ -61,6 +66,14 @@ module.exports = async (env, options) => {
           {
             from: "assets/*",
             to: "assets/[name][ext][query]",
+          },
+          {
+            from: "src/assets/branding",
+            to: "assets/branding/[name][ext]",
+            noErrorOnMissing: true,
+            globOptions: {
+              ignore: ["**/*.md"],
+            },
           },
           {
             from: "manifest*.xml",
