@@ -2,6 +2,9 @@
 
 import "./excel";
 import { initUploadSection } from "./upload";
+import { initIssueModeSection } from "./issueMode";
+import { initStaticIcons } from "./icons";
+import { initTemplateSection } from "./template";
 
 function initBrandLogo(): void {
   const logo = document.getElementById("brand-logo") as HTMLImageElement | null;
@@ -25,5 +28,8 @@ function initBrandLogo(): void {
 
 document.addEventListener("DOMContentLoaded", () => {
   initBrandLogo();
+  initStaticIcons();
   initUploadSection();
+  initIssueModeSection();
+  initTemplateSection();
 });

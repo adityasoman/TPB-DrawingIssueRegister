@@ -43,6 +43,7 @@
                     aria-describedby="upload-caption"
                     class="border-2 border-dashed border-line rounded bg-surface-2 px-4 py-6 flex flex-col items-center gap-1 text-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent"
                 >
+                    <i data-lucide="upload-cloud" class="text-ink-muted h-5 w-5 mb-1"></i>
                     <span class="text-ink text-sm">Drag &amp; drop transmittal files here</span>
                     <span class="text-ink-muted text-xs">or click to browse</span>
                     <input id="upload-input" type="file" accept=".xlsx,.xls,.csv" multiple class="hidden" />
@@ -50,10 +51,23 @@
 
                 <p id="upload-error" class="text-xs text-red-400 hidden" role="alert"></p>
 
-                <ul id="upload-file-list" class="flex flex-col gap-1"></ul>
+                <div class="flex flex-row justify-end">
+                    <button
+                        id="upload-clear-all"
+                        type="button"
+                        class="hidden text-xs text-ink-muted hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded"
+                    >
+                        <i data-lucide="trash-2" class="h-3.5 w-3.5 inline align-text-bottom mr-1"></i>
+                        Clear all
+                    </button>
+                </div>
+
+                <ul id="upload-file-list" class="flex flex-col gap-1 max-h-40 overflow-y-auto pr-1"></ul>
 
                 <p id="upload-caption" class="text-ink-muted text-xs">Accepts one or more .xlsx, .xls, or .csv transmittal files.</p>
             </section>
+
+            <hr class="border-t border-line" />
 
             <section aria-labelledby="issue-mode-heading" class="flex flex-col gap-2">
                 <h2 id="issue-mode-heading" class="text-ink text-sm font-semibold m-0">2. Issue Mode</h2>
@@ -82,11 +96,56 @@
 
                 <p id="issue-mode-caption" class="text-ink-muted text-xs">Choose "Single issue" if this transmittal covers one drawing issue, or "Multiple issues" if it bundles several into one file.</p>
             </section>
+
+            <hr class="border-t border-line" />
+
+            <section aria-labelledby="template-heading" class="flex flex-col gap-2">
+                <h2 id="template-heading" class="text-ink text-sm font-semibold m-0">3. Load Template</h2>
+
+                <button
+                    id="load-template-btn"
+                    type="button"
+                    class="bg-surface-2 border border-line text-ink text-sm rounded px-4 py-2 flex flex-row items-center justify-center gap-2 hover:border-accent focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                    <i data-lucide="file-plus" class="h-4 w-4"></i>
+                    Load Template Issue Register
+                </button>
+
+                <div id="template-confirm" class="hidden flex-col gap-2 bg-surface-2 border border-line rounded p-3">
+                    <p class="text-ink text-xs">A "DIR_Template" sheet already exists in this workbook. Insert another copy?</p>
+                    <div class="flex flex-row gap-2">
+                        <button id="template-confirm-yes" type="button" class="text-xs bg-accent text-canvas rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-accent">Insert anyway</button>
+                        <button id="template-confirm-no" type="button" class="text-xs text-ink-muted hover:text-accent rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-accent">Cancel</button>
+                    </div>
+                </div>
+
+                <p id="template-status" class="text-xs hidden" role="status"></p>
+
+                <p id="template-caption" class="text-ink-muted text-xs">Inserts the standard TP Bennett drawing issue register template as a new sheet in this workbook.</p>
+            </section>
+
+            <hr class="border-t border-line" />
+
+            <section aria-labelledby="populate-heading" class="flex flex-col gap-2">
+                <h2 id="populate-heading" class="text-ink text-sm font-semibold m-0">4. Populate Register</h2>
+
+                <button
+                    id="populate-register-btn"
+                    type="button"
+                    disabled
+                    class="populate-halo bg-accent text-canvas font-semibold text-sm rounded px-4 py-2 flex flex-row items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                    <i data-lucide="square-pen" class="h-4 w-4"></i>
+                    Populate Register
+                </button>
+
+                <p id="populate-caption" class="text-ink-muted text-xs">Reads the uploaded transmittal(s) and fills in the issue register.</p>
+            </section>
         </main>
     </div>
     <footer class="bg-surface border-t border-line flex flex-row items-center justify-between gap-2 px-4 py-2 text-xs text-ink-muted">
         <span>&#169; 2026 TP Bennett. All rights reserved.</span>
-        <span>Version: Released for Testing</span>
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-accent/20 text-accent text-[10px] font-semibold uppercase tracking-wide">V:Test</span>
     </footer>
 </body>
 

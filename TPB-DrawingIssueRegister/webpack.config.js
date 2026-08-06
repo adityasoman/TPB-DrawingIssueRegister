@@ -53,6 +53,12 @@ module.exports = async (env, options) => {
             filename: "assets/[name][ext][query]",
           },
         },
+        {
+          // Bundled inline as base64 so it can be handed straight to
+          // Excel.Workbook.insertWorksheetsFromBase64 with no runtime fetch.
+          test: /\.xlsx$/,
+          type: "asset/inline",
+        },
       ],
     },
     plugins: [

@@ -1,5 +1,7 @@
 /* global document, DragEvent, KeyboardEvent, File, FileList, HTMLElement, HTMLInputElement, HTMLUListElement */
 
+import { createElement, FileSpreadsheet, X } from "lucide";
+
 const ACCEPTED_EXTENSIONS = [".xlsx", ".xls", ".csv"];
 
 let acceptedFiles: File[] = [];
@@ -9,7 +11,7 @@ function hasAcceptedExtension(filename: string): boolean {
   return ACCEPTED_EXTENSIONS.some((ext) => lower.endsWith(ext));
 }
 
-function renderFileList(listEl: HTMLUListElement): void {
+function renderFileList(listEl: HTMLUListElement, clearAllBtn: HTMLElement): void {
   listEl.innerHTML = "";
 
   acceptedFiles.forEach((file, index) => {
@@ -17,25 +19,34 @@ function renderFileList(listEl: HTMLUListElement): void {
     item.className =
       "flex flex-row items-center justify-between gap-2 bg-surface border border-line rounded px-3 py-1.5 text-sm text-ink";
 
+    const nameWrap = document.createElement("span");
+    nameWrap.className = "flex flex-row items-center gap-2 min-w-0";
+    nameWrap.appendChild(
+      createElement(FileSpreadsheet, { class: "h-4 w-4 text-ink-muted shrink-0" })
+    );
+
     const name = document.createElement("span");
     name.textContent = file.name;
     name.className = "truncate";
+    nameWrap.appendChild(name);
 
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
-    removeBtn.textContent = "Remove";
     removeBtn.setAttribute("aria-label", `Remove ${file.name}`);
     removeBtn.className =
-      "text-ink-muted hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded text-xs shrink-0";
+      "text-ink-muted hover:text-accent focus:outline-none focus:ring-2 focus:ring-accent rounded shrink-0";
+    removeBtn.appendChild(createElement(X, { class: "h-4 w-4" }));
     removeBtn.addEventListener("click", () => {
       acceptedFiles.splice(index, 1);
-      renderFileList(listEl);
+      renderFileList(listEl, clearAllBtn);
     });
 
-    item.appendChild(name);
+    item.appendChild(nameWrap);
     item.appendChild(removeBtn);
     listEl.appendChild(item);
   });
+
+  clearAllBtn.classList.toggle("hidden", acceptedFiles.length === 0);
 }
 
 function showError(errorEl: HTMLElement, message: string): void {
@@ -48,7 +59,12 @@ function clearError(errorEl: HTMLElement): void {
   errorEl.classList.add("hidden");
 }
 
-function handleFiles(files: FileList | null, listEl: HTMLUListElement, errorEl: HTMLElement): void {
+function handleFiles(
+  files: FileList | null,
+  listEl: HTMLUListElement,
+  errorEl: HTMLElement,
+  clearAllBtn: HTMLElement
+): void {
   if (!files || files.length === 0) {
     return;
   }
@@ -71,7 +87,7 @@ function handleFiles(files: FileList | null, listEl: HTMLUListElement, errorEl: 
     clearError(errorEl);
   }
 
-  renderFileList(listEl);
+  renderFileList(listEl, clearAllBtn);
 }
 
 export function initUploadSection(): void {
@@ -79,8 +95,9 @@ export function initUploadSection(): void {
   const input = document.getElementById("upload-input") as HTMLInputElement | null;
   const listEl = document.getElementById("upload-file-list") as HTMLUListElement | null;
   const errorEl = document.getElementById("upload-error");
+  const clearAllBtn = document.getElementById("upload-clear-all");
 
-  if (!dropzone || !input || !listEl || !errorEl) {
+  if (!dropzone || !input || !listEl || !errorEl || !clearAllBtn) {
     return;
   }
 
@@ -113,11 +130,17 @@ export function initUploadSection(): void {
   dropzone.addEventListener("drop", (event) => {
     event.preventDefault();
     dropzone.classList.remove("border-accent");
-    handleFiles((event as DragEvent).dataTransfer?.files ?? null, listEl, errorEl);
+    handleFiles((event as DragEvent).dataTransfer?.files ?? null, listEl, errorEl, clearAllBtn);
   });
 
   input.addEventListener("change", () => {
-    handleFiles(input.files, listEl, errorEl);
+    handleFiles(input.files, listEl, errorEl, clearAllBtn);
     input.value = "";
+  });
+
+  clearAllBtn.addEventListener("click", () => {
+    acceptedFiles = [];
+    clearError(errorEl);
+    renderFileList(listEl, clearAllBtn);
   });
 }

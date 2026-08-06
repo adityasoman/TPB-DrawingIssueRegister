@@ -75,3 +75,21 @@
 b {
     font-weight: bold;
 }
+
+/*
+ * Populate Register halo/glow: a pulsing ring around the button. Not
+ * expressible as plain Tailwind utilities without a plugin, so it lives
+ * here as a small hand-written component style.
+ */
+@keyframes populate-halo {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 55%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--color-accent) 0%, transparent);
+  }
+}
+
+.populate-halo {
+  animation: populate-halo 2.2s ease-in-out infinite;
+}
